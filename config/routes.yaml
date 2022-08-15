@@ -1,3 +1,4 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+process_image:
+    path: /process-and-upload-file
+    controller: App\Controller\ProcessImageController
+    methods: [POST]

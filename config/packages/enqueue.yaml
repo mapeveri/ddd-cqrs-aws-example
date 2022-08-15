@@ -1,0 +1,12 @@
+enqueue:
+    snsConfiguration:
+        transport:
+            dsn: 'sns:'
+            connection_factory_class: 'Enqueue\Sns\SnsConnectionFactory'
+            key: '%env(AWS_KEY)%'
+            secret: '%env(AWS_SECRET)%'
+            region: '%env(AWS_REGION)%'
+        client: ~
+    sqsConfiguration:
+        transport: 'sqs:?key=%env(AWS_KEY)%&secret=%env(AWS_SECRET)%&region=%env(AWS_REGION)%'
+        client: ~

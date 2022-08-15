@@ -1,0 +1,21 @@
+framework:
+    messenger:
+        default_bus: command.bus
+
+        buses:
+            command.bus: ~
+            query.bus: ~
+            event.bus:
+                default_middleware: allow_no_handlers
+
+        transports:
+            sync: 'sync://'
+            sns:
+                dsn: 'enqueue://snsConfiguration?topic[name]=%env(AWS_TOPIC)%'
+                serializer: App\Shared\Infrastructure\Symfony\Messenger\Serializer\MessageSerializer
+            sqs:
+                dsn: 'enqueue://sqsConfiguration?topic[name]=%env(AWS_TOPIC)%&queue[name]=%env(AWS_QUEUE)%&receiveTimeout=3'
+                serializer: App\Shared\Infrastructure\Symfony\Messenger\Serializer\MessageSerializer
+
+        routing:
+            'App\Shared\Domain\Bus\Event\DomainEvent': sns

@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    aws_bucket: '%env(AWS_BUCKET)%'
 
 services:
     # default configuration for services in *this* file
@@ -20,5 +21,41 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: [ 'controller.service_arguments' ]
+
+    App\Process\:
+        resource: '../src/Process'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Shared\Domain\Bus\Event\EventHandler:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }
+
+        App\Shared\Domain\Bus\Command\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+        App\Shared\Domain\Bus\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
+    App\Shared\Infrastructure\Symfony\Messenger\MessageMapping:
+        arguments: [ !tagged messenger.message_handler ]
+
+    App\Shared\Infrastructure\Persistence\File\S3FileManager:
+        class: 'App\Shared\Infrastructure\Persistence\File\S3FileManager'
+        arguments:
+            - '@aws.s3'
+            - '%aws_bucket%'
+
+    App\Shared\Domain\FileManagerInterface:
+        alias: App\Shared\Infrastructure\Persistence\File\S3FileManager
+
+    App\Shared\Infrastructure\Persistence\DynamoDb\DynamoDbRepository:
+        class: '    App\Shared\Infrastructure\Persistence\DynamoDb\DynamoDbRepository'
+        arguments:
+            - '@aws.dynamodb'
