@@ -8,5 +8,10 @@ enqueue:
             region: '%env(AWS_REGION)%'
         client: ~
     sqsConfiguration:
-        transport: 'sqs:?key=%env(AWS_KEY)%&secret=%env(AWS_SECRET)%&region=%env(AWS_REGION)%'
+        transport:
+            dsn: 'sqs:'
+            connection_factory_class: 'Enqueue\Sqs\SqsConnectionFactory'
+            key: '%env(AWS_KEY)%'
+            secret: '%env(AWS_SECRET)%'
+            region: '%env(AWS_REGION)%'
         client: ~

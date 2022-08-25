@@ -20,7 +20,7 @@ final class MessageSerializer implements SerializerInterface
     {
         $encodedEnvelope = json_decode($encodedEnvelope['body'], true);
         $rawData = json_decode($encodedEnvelope['Message'], true);
-        $headers = $encodedEnvelope['MessageAttributes']['Headers'];
+        $headers = json_decode($encodedEnvelope['MessageAttributes']['Headers']['Value'], true)[0];
 
         /** @var DomainEvent $class */
         $class = $this->mapping->for($rawData['type']);
