@@ -8,10 +8,10 @@ use App\Process\Image\Domain\Resize;
 
 final class ResizeImage implements Resize
 {
-    public function process(string $imageFile, int $width, int $height): string
+    public function process(string $imageFileContent, int $width, int $height): string
     {
         $newTrueColorImage = imagecreatetruecolor($width, $height);
-        $newImage = imagecreatefromstring($imageFile);
+        $newImage = imagecreatefromstring($imageFileContent);
 
         imagecopyresampled(
             $newTrueColorImage,

@@ -37,4 +37,9 @@ class Image extends AggregateRoot
 
         return $image;
     }
+
+    public function addProcessedFileChild(string $fileName): void
+    {
+        $this->processedFilesChild[] = $fileName;
+    }
 }

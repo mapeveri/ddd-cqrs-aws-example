@@ -45,6 +45,20 @@
             "ref": "1249577668563ae1e8c62a3dfce2112a05ed903c"
         }
     },
+    "phpunit/phpunit": {
+        "version": "9.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "9.3",
+            "ref": "a6249a6c4392e9169b87abf93225f7f9f59025e6"
+        },
+        "files": [
+            ".env.test",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
+    },
     "sroze/messenger-enqueue-transport": {
         "version": "0.6",
         "recipe": {
