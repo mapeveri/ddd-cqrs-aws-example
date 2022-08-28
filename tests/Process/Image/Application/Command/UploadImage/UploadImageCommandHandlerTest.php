@@ -29,7 +29,7 @@ final class UploadImageCommandHandlerTest extends ImageUnitTestCase
     public function testCreateImage()
     {
         $image = ImageMother::create();
-        $command = UploadImageCommandMother::create(['fileName' => $image->originalFilePath(), 'content' => Faker::random()->text]);
+        $command = UploadImageCommandMother::create(['fileName' => $image->originalFilePath(), 'content' => Faker::random()->text()]);
 
         $this->shouldWriteFile($command->fileName(), $command->content());
 

@@ -7,7 +7,7 @@ namespace App\Process\Image\Application\Event\ProcessImages;
 use App\Process\Image\Domain\Event\ImageCreatedEvent;
 use App\Process\Image\Domain\ImageRepository;
 use App\Process\Image\Domain\Resize;
-use App\Process\Image\Domain\ValueObjects\ImageId;
+use App\Process\Image\Domain\Services\ImageFinder;
 use App\Shared\Domain\Bus\Event\EventHandler;
 use App\Shared\Domain\FileManagerInterface;
 
@@ -16,19 +16,19 @@ final class ProcessImagesOnImageCreatedEventHandler implements EventHandler
     private const RESIZE_WIDTH = 150;
     private const RESIZE_HEIGHT = 150;
 
+    private ImageFinder $finder;
+
     public function __construct(
         private ImageRepository $repository,
         private Resize $resizeImage,
         private FileManagerInterface $fileManager
     ) {
+        $this->finder = new ImageFinder($this->repository);
     }
 
     public function __invoke(ImageCreatedEvent $event): void
     {
-        $image = $this->repository->find(new ImageId($event->aggregateId()));
-        if (null === $image) {
-            return;
-        }
+        $image = $this->finder->__invoke($event->aggregateId());
 
         $imageFileContent = $this->fileManager->read($image->originalFilePath());
 

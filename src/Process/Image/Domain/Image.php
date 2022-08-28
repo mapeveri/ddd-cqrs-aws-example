@@ -42,4 +42,17 @@ class Image extends AggregateRoot
     {
         $this->processedFilesChild[] = $fileName;
     }
+
+    public function fileNameImageExists(string $fileName): bool
+    {
+        if ($fileName === $this->originalFilePath) {
+            return true;
+        }
+
+        if (isset($this->processedFilesChild[0]) && in_array($fileName, $this->processedFilesChild[0])) {
+            return true;
+        }
+
+        return false;
+    }
 }

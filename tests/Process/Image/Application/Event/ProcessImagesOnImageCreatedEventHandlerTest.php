@@ -9,8 +9,8 @@ use App\Tests\Process\Image\Domain\Event\ImageCreatedEventMother;
 use App\Tests\Process\Image\Domain\ImageMother;
 use App\Tests\Process\Image\Domain\ValueObjects\ImageIdMother;
 use App\Tests\Process\Image\ImageUnitTestCase;
-
 use App\Tests\Shared\Utils\Faker\Faker;
+
 use function Lambdish\Phunctional\apply;
 
 final class ProcessImagesOnImageCreatedEventHandlerTest extends ImageUnitTestCase
@@ -42,8 +42,8 @@ final class ProcessImagesOnImageCreatedEventHandlerTest extends ImageUnitTestCas
 
         $this->shouldFind($image);
 
-        $contentImageFile = Faker::random()->text;
-        $imageFileContentResized = Faker::random()->text;
+        $contentImageFile = Faker::random()->text();
+        $imageFileContentResized = Faker::random()->text();
         $this->shouldReadFile($image->originalFilePath(), $contentImageFile);
         $this->shouldResizeImage($contentImageFile, $imageFileContentResized);
 

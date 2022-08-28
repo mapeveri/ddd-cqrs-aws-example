@@ -2,3 +2,8 @@ process_image:
     path: /process-and-upload-file
     controller: App\Controller\ProcessImageController
     methods: [POST]
+
+preview_image:
+    path: /preview-image/{id}/{imageName}
+    controller: App\Controller\PreviewImageController
+    methods: [GET]
