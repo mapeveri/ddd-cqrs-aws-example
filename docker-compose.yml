@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-app
+    working_dir: /var/www/
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www
+    ports:
+      - "8000:8000"
+    command: symfony server:start
