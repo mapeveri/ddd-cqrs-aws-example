@@ -19,7 +19,7 @@ Installation
         docker exec -it php-app bash
 
 
-3. Create .env.local and configurate.
+3. Create .env.local and configure it.
 
 
 4. Execute composer install:
@@ -28,4 +28,4 @@ Installation
         composer install
 
 
-5. In the browser execute http://localhost:8000
+5. Go to the browser and visit http://localhost:8000
